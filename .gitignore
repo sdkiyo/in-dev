@@ -1,0 +1,3 @@
+build/*
+!build/helper-file.txt
+.ninja_log

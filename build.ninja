@@ -1,0 +1,57 @@
+ninja_required_version = 1.13.2
+
+# ===== Flags =====
+compiler = clang
+enabled_warnings = -Wall -Wextra -Wpedantic -Wconversion -Wfloat-conversion -Wsign-conversion -Wdeprecated-declarations -Wshadow -Wformat=2 -Wvla -Wnull-dereference -Wstack-protector -Wcast-qual -Wconditional-uninitialized -Wtautological-constant-in-range-compare -Wcomma -Wassign-enum -Wbad-function-cast -Wpointer-arith -Widiomatic-parentheses -Wthread-safety -Wswitch-default -Wundef -Warray-bounds-pointer-arithmetic -Wshift-sign-overflow -Wempty-body -Wstrict-prototypes
+enabled_features = -fdiagnostics-color
+enabled_defines = -D_POSIX_C_SOURCE=199309L
+compile_flags = -march=native -O2 -pipe -flto -std=c23 $enabled_warnings $enabled_features $enabled_defines
+compile_shared_flags = -fPIC
+link_flags = -flto
+link_shared_flags = -shared -flto
+
+
+# ===== Variables =====
+build_directory = build
+object_directory = $build_directory/obj
+
+output_name = mxTunClient
+
+
+# ===== Rules =====
+rule compile
+  command = $compiler $INCLUDES $compile_flags -c $in -o $out
+
+rule compile_shared
+  command = $compiler $INCLUDES $compile_flags $compile_shared_flags -c $in -o $out
+
+rule link
+  command = $compiler $link_flags $in -o $out $FLAGS
+
+rule link_shared
+  command = $compiler $link_shared_flags $in -o $out $FLAGS
+
+
+# ===== Object files =====
+build $object_directory/main.o: compile src/main.c
+  INCLUDES = -I./include
+
+build $object_directory/generateUUIDv4.o: compile src/generateUUIDv4.c
+  INCLUDES = -I./include
+
+build $object_directory/makeMessageObject.o: compile src/makeMessageObject.c
+  INCLUDES = -I./include
+
+build $object_directory/makeSessionLoginRequest.o: compile src/makeSessionLoginRequest.c
+  INCLUDES = -I./include
+
+build $object_directory/sendCallback.o: compile src/callbacks/sendCallback.c
+  INCLUDES = -I./include
+
+
+# ===== Output files =====
+build $build_directory/$output_name: link $object_directory/main.o $object_directory/generateUUIDv4.o $object_directory/makeMessageObject.o $object_directory/sendCallback.o $object_directory/makeSessionLoginRequest.o
+
+
+# ===== Default build =====
+default $build_directory/$output_name
