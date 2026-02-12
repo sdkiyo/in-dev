@@ -4,7 +4,7 @@
 #include "../../net-client/include/netInterface.h"
 
 
-uint8_t sendCallback(const char *const pResponse, const uint16_t responseLen, char* pRequest, uint16_t* pCurrentRequestLen, const uint16_t requestMaxLen, void* pUserData, const uint8_t prevCallbackReturnValue)
+uint8_t readCallback(const char *const pResponse, const uint16_t responseLen, char* pRequest, uint16_t* pCurrentRequestLen, const uint16_t requestMaxLen, void* pUserData, const uint8_t prevCallbackReturnValue)
 {
 	if (prevCallbackReturnValue == CALLBACK_FIRST_TRY)
 	{
@@ -41,7 +41,21 @@ uint8_t sendCallback(const char *const pResponse, const uint16_t responseLen, ch
 			return 0;// next callback
 		}
 
-		makeMessageObject(((MxTunData*)pUserData)->pData, ((MxTunData*)pUserData)->dataLength, ((MxTunData*)pUserData)->pSession->chatId, pRequest, pCurrentRequestLen);
+
+		memcpy(pRequest, getChatHistoryTemplate, sizeof(getChatHistoryTemplate));
+
+		pRequest[19] = (char) ((((MxTunData*)pUserData)->pSession->chatId & 0xFF00000000000000) >> 56);// i love x86_64 processor architecture
+		pRequest[20] = (char) ((((MxTunData*)pUserData)->pSession->chatId & 0x00FF000000000000) >> 48);
+		pRequest[21] = (char) ((((MxTunData*)pUserData)->pSession->chatId & 0x0000FF0000000000) >> 40);
+		pRequest[22] = (char) ((((MxTunData*)pUserData)->pSession->chatId & 0x000000FF00000000) >> 32);
+		pRequest[23] = (char) ((((MxTunData*)pUserData)->pSession->chatId & 0x00000000FF000000) >> 24);
+		pRequest[24] = (char) ((((MxTunData*)pUserData)->pSession->chatId & 0x0000000000FF0000) >> 16);
+		pRequest[25] = (char) ((((MxTunData*)pUserData)->pSession->chatId & 0x000000000000FF00) >> 8);
+		pRequest[26] = (char) (((MxTunData*)pUserData)->pSession->chatId & 0x00000000000000FF);
+
+		*pCurrentRequestLen = sizeof(getChatHistoryTemplate);
+		printf("pCurrentRequestLen: %d\n", *pCurrentRequestLen);
+
 
 		// ===== DEBUG DEBUG DEBUG =====
 		printf("client request start:\n");
@@ -56,6 +70,12 @@ uint8_t sendCallback(const char *const pResponse, const uint16_t responseLen, ch
 			printf("0x%.2x ", pRequest[i]);
 		}
 		printf("\nclient request end\n");
+		printf("\x1b[32mserver response start:\x1b[0m\n");
+		for (uint16_t i = 0; i < responseLen; i++)
+		{
+			printf("0x%.2x ", pResponse[i]);
+		}
+		printf("\x1b[32m\nserver response end\x1b[0m\n");
 		// ===== DEBUG DEBUG DEBUG =====
 
 		// сообщить другому потоку что можно давать следующие данные

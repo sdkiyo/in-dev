@@ -12,11 +12,11 @@ typedef struct MxTunSession {
 	uint16_t	sessionTokenLen;
 } MxTunSession;
 
-typedef struct MxTunSentData {
+typedef struct MxTunData {
 	const MxTunSession*	pSession;
 	const void*		pData;
 	uint32_t		dataLength;
-} MxTunSentData;
+} MxTunData;
 
 
 #define MX_UNREAD	0
@@ -32,6 +32,7 @@ void makeMessageObject(const char *const pData, const uint32_t dataLen, const ui
 
 
 uint8_t sendCallback(const char *const pResponse, const uint16_t responseLen, char* pRequest, uint16_t* pCurrentRequestLen, const uint16_t requestMaxLen, void* pUserData, const uint8_t prevCallbackReturnValue);
+uint8_t readCallback(const char *const pResponse, const uint16_t responseLen, char* pRequest, uint16_t* pCurrentRequestLen, const uint16_t requestMaxLen, void* pUserData, const uint8_t prevCallbackReturnValue);
 
 
 

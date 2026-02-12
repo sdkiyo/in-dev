@@ -58,7 +58,7 @@ static const unsigned char sendMessageTemplate[] = {
 	0x0B,			// protocolVersion: 11
 	0x00, 0x00,		// cmd: 0
 	0x00,			// sequence: 0
-	0x00, 0x40,		// operationCode: 64 (MSG_EDIT)
+	0x00, 0x40,		// operationCode: 64 (MSG_SEND)
 	0x00, 0x00, 0x00, 0x00,	// payloadLen: (in template all zero)
 	/* =======PAYLOAD=IN=MSGPACK======= */
 	0x82,// fixmap
@@ -108,8 +108,8 @@ static const unsigned char getChatHistoryTemplate[] = {
 	0x0B,			// protocolVersion: 11
 	0x00, 0x00,		// cmd: 0
 	0x00,			// sequence: 0
-	0x00, 0x40,		// operationCode: 64 (MSG_EDIT)
-	0x00, 0x00, 0x00, 0x55,	// payloadLen: 85
+	0x00, 0x31,		// operationCode: 49 (CHAT_HISTORY)
+	0x00, 0x00, 0x00, 0x3f,	// payloadLen: 63
 	/* =======PAYLOAD=IN=MSGPACK======= */
 	0x85,// fixmap
 	0xA6,// fixstr
@@ -127,38 +127,23 @@ static const unsigned char getChatHistoryTemplate[] = {
 
 	0xA8,// fixstr
 	'f','r','o','m','T','i','m','e',
-	0x00,// fixint
+	0x00,// fixint with zero value
 
 	0xA7,// fixstr
 	'f','o','r','w','a','r','d',
-	0xD3,// int 64
-
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
+	0xCD,// uint 16
+	0x02,// value
+	0xFF,// value
 
 	0xA8,// fixstr
 	'b','a','c','k','w','a','r','d',
-	0xD3,// int 64
-
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
-	0x00,// value (in template all zero)
+	0xCD,// uint 16
+	0x02,// value
+	0xFF,// value
 
 	0xAB,// fixstr
 	'g','e','t','M','e','s','s','a','g','e','s',
-	0xC2,// false
-};
+	0xC2,/* false */ };
 
 
 static const unsigned char getMessageTemplate[] = {

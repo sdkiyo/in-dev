@@ -48,9 +48,12 @@ build $object_directory/makeSessionLoginRequest.o: compile src/makeSessionLoginR
 build $object_directory/sendCallback.o: compile src/callbacks/sendCallback.c
   INCLUDES = -I./include
 
+build $object_directory/readCallback.o: compile src/callbacks/readCallback.c
+  INCLUDES = -I./include
+
 
 # ===== Output files =====
-build $build_directory/$output_name: link $object_directory/main.o $object_directory/generateUUIDv4.o $object_directory/makeMessageObject.o $object_directory/sendCallback.o $object_directory/makeSessionLoginRequest.o
+build $build_directory/$output_name: link $object_directory/main.o $object_directory/generateUUIDv4.o $object_directory/makeMessageObject.o $object_directory/makeSessionLoginRequest.o $object_directory/sendCallback.o $object_directory/readCallback.o
 
 
 # ===== Default build =====
