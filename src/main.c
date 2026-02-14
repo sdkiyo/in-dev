@@ -29,7 +29,7 @@ int main(const int argc, const char *const *const argv)
 	MxTunSession session = {};
 	session.pSessionToken		= argv[1];
 	session.sessionTokenLen		= (uint16_t) strlen(argv[1]);// FIXME
-	session.chatId			= 0x00;// FIXME
+	session.chatId			= 0xFFFFBFA19C9E8AA6;// FIXME
 
 //	MxTunData sentData = {};
 //	sentData.pSession	= &session;

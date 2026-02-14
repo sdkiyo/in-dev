@@ -56,6 +56,12 @@ uint8_t sendCallback(const char *const pResponse, const uint16_t responseLen, ch
 			printf("0x%.2x ", pRequest[i]);
 		}
 		printf("\nclient request end\n");
+		printf("\x1b[32mserver response start:\x1b[0m\n");
+		for (uint16_t i = 0; i < responseLen; i++)
+		{
+			printf("0x%.2x ", pResponse[i]);
+		}
+		printf("\x1b[32m\nserver response end\x1b[0m\n");
 		// ===== DEBUG DEBUG DEBUG =====
 
 		// сообщить другому потоку что можно давать следующие данные

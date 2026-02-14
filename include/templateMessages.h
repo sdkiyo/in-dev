@@ -184,4 +184,42 @@ static const unsigned char getMessageTemplate[] = {
 };
 
 
+static const unsigned char deleteMessageTemplate[] = {
+	/* =======HEADERS======= */
+	0x0B,			// protocolVersion: 11
+	0x00, 0x00,		// cmd: 0
+	0x00,			// sequence: 0
+	0x00, 0x42,		// operationCode: 66 (MSG_DELETE)
+	0x00, 0x00, 0x00, 0x26,	// payloadLen: 38
+	/* =======PAYLOAD=IN=MSGPACK======= */
+	0x82,// fixmap
+	0xA6,// fixstr
+	'c','h','a','t','I','d',
+	0xD3,// int 64
+
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+
+	0xAA,// fixstr
+	'm','e','s','s','a','g','e','I','d','s',
+	0x91,// fixarray
+	0xD3,// int 64
+
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+	0x00,// value (in template all zero)
+};
+
+
 #endif // MX_TUNNEL_CLIENT_INCLUDE_TEMPLATE_MESSAGES_H_
