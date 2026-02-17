@@ -2,7 +2,7 @@ ninja_required_version = 1.13.2
 
 # ===== Flags =====
 compiler = clang
-enabled_warnings = -Wall -Wextra -Wpedantic -Wconversion -Wfloat-conversion -Wsign-conversion -Wdeprecated-declarations -Wshadow -Wformat=2 -Wvla -Wnull-dereference -Wstack-protector -Wcast-qual -Wconditional-uninitialized -Wtautological-constant-in-range-compare -Wcomma -Wassign-enum -Wbad-function-cast -Wpointer-arith -Widiomatic-parentheses -Wthread-safety -Wswitch-default -Wundef -Warray-bounds-pointer-arithmetic -Wshift-sign-overflow -Wempty-body -Wstrict-prototypes
+enabled_warnings = -Wall -Wextra -Wpedantic -Wconversion -Wfloat-conversion -Wsign-conversion -Wdeprecated-declarations -Wuninitialized -Wshadow -Wformat=2 -Wvla -Wnull-dereference -Wstack-protector -Wcast-qual -Wconditional-uninitialized -Wtautological-constant-in-range-compare -Wcomma -Wassign-enum -Wbad-function-cast -Wpointer-arith -Widiomatic-parentheses -Wthread-safety -Wswitch-default -Wundef -Warray-bounds-pointer-arithmetic -Wshift-sign-overflow -Wempty-body -Wstrict-prototypes
 enabled_features = -fdiagnostics-color
 enabled_defines = -D_POSIX_C_SOURCE=199309L
 compile_flags = -march=native -O2 -pipe -flto -std=c23 $enabled_warnings $enabled_features $enabled_defines
